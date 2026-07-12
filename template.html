@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whiteboard Challenge Template</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #6b6b6b;
+    --text-muted: #999999;
+    --border: #e0e0e0;
+    --card-shadow: 0px 1px 3px 0px rgba(0,0,0,0.08);
+    --card-radius: 12px;
+
+    /* 8-step color system */
+    --step1: #0a66c2;  /* Why — Blue */
+    --step1-bg: #f0f7ff;
+    --step2: #00838f;  /* Who — Teal */
+    --step2-bg: #e0f7fa;
+    --step3: #3949ab;  /* Context — Indigo */
+    --step3-bg: #e8eaf6;
+    --step4: #ef6c00;  /* Assumptions — Orange */
+    --step4-bg: #fff3e0;
+    --step5: #7b1fa2;  /* Ideation — Purple */
+    --step5-bg: #f9f0ff;
+    --step6: #2e7d32;  /* Flow/Journey — Green */
+    --step6-bg: #e8f5e9;
+    --step7: #37474f;  /* Solution/Wireframes — Blue-Gray */
+    --step7-bg: #eceff1;
+    --step8: #c62828;  /* Review — Red */
+    --step8-bg: #ffebee;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 40px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .board-header { margin-bottom: 8px; }
+  .board-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+  .board-header .subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* ===== META BAR ===== */
+  .meta-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0 24px;
+    flex-wrap: wrap;
+  }
+  .meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .meta-tag .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ===== ROADMAP ===== */
+  .roadmap {
+    background: var(--card);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .roadmap h3 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .roadmap-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid var(--border);
+  }
+  .roadmap-item .ri-badge {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .roadmap-item .ri-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .roadmap-item .ri-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== STEP CARDS (shared) ===== */
+  .step-card {
+    background: var(--card);
+    border-radius: var(--card-radius);
+    box-shadow: var(--card-shadow);
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .step-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+  .section-heading {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  /* ===== QUOTE BLOCK ===== */
+  .quote-block {
+    border-left: 3px solid;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    min-height: 60px;
+  }
+
+  /* ===== DISCUSSION QUESTIONS ===== */
+  .step-discussion {
+    margin-top: 16px;
+    border-radius: 8px;
+    border-left: 3px solid var(--border);
+    background: #fafafa;
+    padding: 12px 16px;
+  }
+  .step-discussion h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .step-discussion h4 .next-arrow {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .step-discussion ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .step-discussion ul li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 0 4px 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .step-discussion ul li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    font-weight: 800;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ===== GOAL GRID (Step 1) ===== */
+  .goal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .goal-block {
+    border-radius: 8px;
+    padding: 14px;
+    border: 1px solid;
+    min-height: 80px;
+  }
+  .goal-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .goal-block p {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+  }
+  .goal-block.user-goal {
+    border-color: var(--step1);
+    background: var(--step1-bg);
+  }
+  .goal-block.user-goal h4 { color: var(--step1); }
+  .goal-block.biz-goal {
+    border-color: var(--border);
+    background: #fafafa;
+  }
+  .goal-block.biz-goal h4 { color: var(--text-muted); }
+
+  /* ===== CLARIFYING QUESTIONS ===== */
+  .questions-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+  }
+  .questions-list li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 0 4px 20px;
+    position: relative;
+    line-height: 1.5;
+    min-height: 24px;
+  }
+  .questions-list li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--step1);
+    font-size: 14px;
+  }
+
+  /* ===== USER CARD (Step 2) ===== */
+  .user-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .user-card {
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid;
+    min-height: 120px;
+  }
+  .user-card.primary {
+    border-color: var(--step2);
+    background: var(--step2-bg);
+  }
+  .user-card.secondary {
+    border-color: var(--border);
+    background: #fafafa;
+  }
+  .user-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .user-card.primary h4 { color: var(--step2); }
+  .user-card.secondary h4 { color: var(--text-muted); }
+  .user-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .user-card ul li {
+    font-size: 13px;
+    color: #444;
+    padding: 3px 0;
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .user-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .user-card.primary ul li::before { background: var(--step2); }
+
+  /* ===== CONTEXT CARD (Step 3) ===== */
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .context-block {
+    border-radius: 8px;
+    padding: 14px;
+    border: 1px solid var(--step3);
+    background: var(--step3-bg);
+    min-height: 100px;
+  }
+  .context-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--step3);
+    margin-bottom: 8px;
+  }
+  .context-block ul {
+    list-style: none;
+    padding: 0;
+  }
+  .context-block ul li {
+    font-size: 13px;
+    color: #444;
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .context-block ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--step3);
+  }
+  .context-implication {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid var(--step3);
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+    min-height: 40px;
+  }
+  .context-implication strong {
+    color: var(--step3);
+    font-weight: 700;
+  }
+
+  /* ===== ASSUMPTION LIST (Step 4) ===== */
+  .assumption-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .assumption-block {
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 100px;
+  }
+  .assumption-block.in-scope {
+    background: var(--step4-bg);
+    border: 1px solid var(--step4);
+  }
+  .assumption-block.out-scope {
+    background: #fafafa;
+    border: 1px solid var(--border);
+  }
+  .assumption-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .assumption-block.in-scope h4 { color: var(--step4); }
+  .assumption-block.out-scope h4 { color: var(--text-muted); }
+  .assumption-block ol, .assumption-block ul {
+    padding-left: 18px;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  /* ===== DIRECTION CARDS (Step 5) ===== */
+  .directions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .direction-card {
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid;
+    min-height: 120px;
+  }
+  .direction-card.chosen {
+    border-color: var(--step5);
+    background: var(--step5-bg);
+  }
+  .direction-card.alt {
+    border-color: var(--border);
+    background: white;
+  }
+  .direction-card h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .direction-card.chosen h4 { color: var(--step5); }
+  .direction-card.alt h4 { color: var(--text-muted); }
+  .direction-card p {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+  }
+  .direction-card .why {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .direction-card.chosen .why { color: var(--step5); }
+  .direction-card.alt .why { color: var(--text-muted); }
+  .direction-card .pro-con {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
+  }
+  .direction-card .pro-con span.pro { color: #2e7d32; font-weight: 600; }
+  .direction-card .pro-con span.con { color: #c62828; font-weight: 600; }
+
+  /* ===== FLOW DIAGRAM (Step 6) ===== */
+  .flow-diagram {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 16px 0;
+    overflow-x: auto;
+    min-height: 60px;
+  }
+  .flow-node {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--step6);
+    background: var(--step6-bg);
+    border: 1px solid #a5d6a7;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .flow-node.entry {
+    background: var(--step6);
+    color: white;
+    border-color: var(--step6);
+  }
+  .flow-arrow-icon {
+    flex-shrink: 0;
+    margin: 0 6px;
+    color: var(--text-muted);
+  }
+
+  /* ===== WIREFRAME SCREENS (Step 7) ===== */
+  .screens-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .screen-frame {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .screen-frame .screen-header {
+    background: #e8e8e8;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+  }
+  .screen-frame .browser-bar {
+    background: #f0f0f0;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .browser-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .browser-dot.red { background: #ff5f57; }
+  .browser-dot.yellow { background: #febc2e; }
+  .browser-dot.green { background: #28c840; }
+  .browser-url {
+    background: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--text-muted);
+    flex: 1;
+  }
+  .browser-status {
+    padding: 4px 11px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .status-safe { background: #e8f5e9; border: 1px solid #a5d6a7; color: #2e7d32; }
+  .status-check { background: #fff3e0; border: 1px solid #ffcc80; color: #e65100; }
+  .status-alert { background: #ffebee; border: 1px solid #ef9a9a; color: #c62828; }
+  .screen-body {
+    padding: 16px;
+    min-height: 200px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+  }
+  .screen-body .placeholder-block {
+    background: white;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 8px;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+  .screen-body .btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .screen-body .btn {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .screen-body .btn.primary { background: var(--step1); color: white; }
+  .screen-body .btn.secondary { background: #f5f5f5; border: 1px solid #ddd; color: #333; }
+  .screen-caption {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    padding: 8px 16px 12px;
+  }
+
+  /* ===== REVIEW SECTION (Step 8) ===== */
+  .review-content p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.8;
+    margin-bottom: 12px;
+    min-height: 24px;
+  }
+  .review-content strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .metric-card {
+    background: var(--step8-bg);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .metric-card .metric-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--step8);
+  }
+  .metric-card .metric-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .next-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .next-step-item {
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #fafafa;
+    border: 1px solid var(--border);
+    font-size: 13px;
+    color: #444;
+    line-height: 1.5;
+    min-height: 60px;
+  }
+  .next-step-item strong {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  /* ===== EDITABLE HINT ===== */
+  [contenteditable="true"] {
+    outline: none;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  [contenteditable="true"]:hover {
+    background: rgba(0,0,0,0.02);
+  }
+  [contenteditable="true"]:focus {
+    background: rgba(10, 102, 194, 0.04);
+    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.12);
+  }
+
+  /* ===== ANNOTATION ===== */
+  .annotation {
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: #f5f5f5;
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-style: italic;
+    line-height: 1.5;
+    min-height: 32px;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { padding: 20px; background: white; }
+    .step-card { break-inside: avoid; box-shadow: none; border: 1px solid #e0e0e0; }
+    .step-discussion { break-inside: avoid; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .user-section, .assumption-grid, .directions-grid, .context-grid { grid-template-columns: 1fr; }
+    .screens-grid { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .next-steps-grid { grid-template-columns: 1fr; }
+    .roadmap-grid { grid-template-columns: 1fr 1fr; }
+    .goal-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<div class="board-header">
+  <h1 contenteditable="true">Design Challenge Title</h1>
+  <p class="subtitle" contenteditable="true">Company — Problem statement summary</p>
+</div>
+
+<div class="meta-bar">
+  <span class="meta-tag"><span class="dot" style="background: var(--step5);"></span> <span contenteditable="true">Challenge Type</span></span>
+  <span class="meta-tag"><span class="dot" style="background: var(--step6);"></span> <span contenteditable="true">Duration</span></span>
+  <span class="meta-tag"><span class="dot" style="background: var(--step1);"></span> <span contenteditable="true">Company</span></span>
+</div>
+
+<!-- ============================================================
+     ROADMAP — 8-step visual overview
+     ============================================================ -->
+<div class="roadmap">
+  <h3>8-Step Roadmap</h3>
+  <div class="roadmap-grid">
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step1);">1</span>
+      <div>
+        <div class="ri-label">Why: Problem & Goal</div>
+        <div class="ri-time">0:00 — 2 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step2);">2</span>
+      <div>
+        <div class="ri-label">Who: Users & Key Players</div>
+        <div class="ri-time">2:00 — 3 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step3);">3</span>
+      <div>
+        <div class="ri-label">Context: When & Where</div>
+        <div class="ri-time">5:00 — 2 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step4);">4</span>
+      <div>
+        <div class="ri-label">Assumptions & Constraints</div>
+        <div class="ri-time">7:00 — 3 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step5);">5</span>
+      <div>
+        <div class="ri-label">Ideation & Prioritize</div>
+        <div class="ri-time">10:00 — 4 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step6);">6</span>
+      <div>
+        <div class="ri-label">Flow / Journey</div>
+        <div class="ri-time">14:00 — 6 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step7);">7</span>
+      <div>
+        <div class="ri-label">Solution / Wireframes</div>
+        <div class="ri-time">20:00 — 8 min</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <span class="ri-badge" style="background: var(--step8);">8</span>
+      <div>
+        <div class="ri-label">Summarize & Next Steps</div>
+        <div class="ri-time">28:00 — 5 min</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 1 — WHY: Problem & Goal
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step1);">Step 1 — Why</span>
+  <h2 class="section-heading">Problem & Goal</h2>
+
+  <div class="quote-block" style="border-color: var(--step1); background: var(--step1-bg);" contenteditable="true">
+    <strong>Internal tool, ~30-person software org.</strong> Linear = ticket/issue tracker, one ticket per problem. Core problem: <strong>no single source of truth</strong> — low-priority/small issues never get resolved, backlog grows unbounded and fragmented. Sharper pain: <strong>cross-functional misalignment</strong> — PM's view of the backlog and engineering's view drift apart; after any change, re-aligning priority across roles is manual and painful.
+  </div>
+
+  <div class="goal-grid">
+    <div class="goal-block user-goal">
+      <h4>User Goal</h4>
+      <p contenteditable="true">Trust that the backlog reflects real, currently-aligned priority — without manually cross-checking PM vs. eng vs. design views.</p>
+    </div>
+    <div class="goal-block biz-goal">
+      <h4>Business Goal</h4>
+      <p contenteditable="true">Cut cross-functional alignment overhead — faster planning cycles, less time spent reconciling backlog views across roles.</p>
+    </div>
+  </div>
+
+  <ul class="questions-list">
+    <li contenteditable="true">Which role is our primary lens — PM, eng manager, IC engineer, or designer? (confirmed: all touch the backlog, but we need ONE to design for)</li>
+    <li contenteditable="true">Is cross-functional alignment (PM↔eng sync) our chosen slice, or do we scope down to single-backlog hygiene only?</li>
+  </ul>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 2: Who</span></h4>
+    <ul>
+      <li contenteditable="true">Is this a "hair on fire" problem or a "nice to have"?</li>
+      <li contenteditable="true">Who's paying? That changes the entire business model.</li>
+      <li contenteditable="true">What's the wedge — which single pain point do you solve first?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 2 — WHO: Users & Key Players
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step2);">Step 2 — Who</span>
+  <h2 class="section-heading" contenteditable="true">Users & Key Players</h2>
+
+  <div class="user-section">
+    <div class="user-card primary">
+      <h4 contenteditable="true">Primary User — Individual Engineer (IC)</h4>
+      <ul>
+        <li contenteditable="true">Works day-to-day inside a ~30-person team's backlog — juggles many tickets across shifting priorities</li>
+        <li contenteditable="true">Picks up tickets with no clear signal on which still matter now vs. gone stale/deprioritized</li>
+        <li contenteditable="true">Files new issues as bugs/tech debt surface — unsure if a duplicate already exists</li>
+        <li contenteditable="true">Wants to trust that their next pick is genuinely the highest-value use of their time — not guess or ask around</li>
+      </ul>
+    </div>
+    <div class="user-card secondary">
+      <h4>Key Players</h4>
+      <ul>
+        <li contenteditable="true">Eng Manager / SDM — assigns ownership, chases stalled tickets, needs aggregate visibility</li>
+        <li contenteditable="true">PM — owns the roadmap/priority source the backlog should stay aligned to</li>
+        <li contenteditable="true">Leadership — stakeholder only (not in the day-to-day project) — wants occasional high-level rollup</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="annotation" contenteditable="true">Research: shadow engineers during ticket pickup — how do they currently decide what to work on next, and how often is their pick already stale/duplicate/deprioritized?</div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 3: Context</span></h4>
+    <ul>
+      <li contenteditable="true">Why this user over the other types? What makes them the best wedge?</li>
+      <li contenteditable="true">How do they currently solve this? What would make them switch?</li>
+      <li contenteditable="true">Are the key players enablers or blockers?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 3 — CONTEXT: When & Where
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step3);">Step 3 — Context</span>
+  <h2 class="section-heading" contenteditable="true">When & Where</h2>
+
+  <div class="context-grid">
+    <div class="context-block">
+      <h4>When (Trigger)</h4>
+      <ul>
+        <li contenteditable="true">Trigger moment</li>
+        <li contenteditable="true">Frequency / duration</li>
+      </ul>
+    </div>
+    <div class="context-block">
+      <h4>Where (Environment)</h4>
+      <ul>
+        <li contenteditable="true">Physical location / device</li>
+        <li contenteditable="true">Environment detail</li>
+      </ul>
+    </div>
+    <div class="context-block">
+      <h4>Situation (Emotional State)</h4>
+      <ul>
+        <li contenteditable="true">Emotional state / mindset</li>
+        <li contenteditable="true">Alone or with others, multitasking?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="context-implication" contenteditable="true">
+    <strong>Design implication:</strong> How the context above should shape the design.
+  </div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 4: Assumptions</span></h4>
+    <ul>
+      <li contenteditable="true">When exactly does the user feel the most pain?</li>
+      <li contenteditable="true">What's the trigger moment that pulls them into this tool?</li>
+      <li contenteditable="true">Does the context imply mobile-first or desktop-first? Why?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 4 — ASSUMPTIONS & CONSTRAINTS
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step4);">Step 4 — Assumptions</span>
+  <h2 class="section-heading" contenteditable="true">Assumptions & Constraints</h2>
+
+  <div class="assumption-grid">
+    <div class="assumption-block in-scope">
+      <h4>Assumptions (In Scope)</h4>
+      <ol>
+        <li contenteditable="true">Assumption 1</li>
+        <li contenteditable="true">Assumption 2</li>
+      </ol>
+    </div>
+    <div class="assumption-block out-scope">
+      <h4>Out of Scope</h4>
+      <ul>
+        <li contenteditable="true">Out-of-scope item 1</li>
+        <li contenteditable="true">Out-of-scope item 2</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="annotation" contenteditable="true">Cross-functional collaboration note goes here.</div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 5: Ideation</span></h4>
+    <ul>
+      <li contenteditable="true">Which assumption is load-bearing? If it's wrong, does the product still work?</li>
+      <li contenteditable="true">What did you scope out that might actually be the real leverage?</li>
+      <li contenteditable="true">What's the cold-start problem?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 5 — IDEATION & PRIORITIZE
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step5);">Step 5 — Ideation</span>
+  <h2 class="section-heading" contenteditable="true">Directions</h2>
+
+  <div class="directions-grid">
+    <div class="direction-card chosen">
+      <h4 contenteditable="true">Direction A — AI Priority Digest (chosen)</h4>
+      <p contenteditable="true">AI scans the full backlog + current roadmap/leadership goals daily, then surfaces a personalized "daily charge": what to pick up next and why it's the highest-priority, non-stale, non-duplicate option right now.</p>
+      <div class="pro-con">
+        <span class="pro">Pro:</span> <span contenteditable="true">Directly answers the IC's core question — "what can I trust as my next pick?" — with visible reasoning, not just a list.</span>
+        &nbsp;|&nbsp;
+        <span class="con">Con:</span> <span contenteditable="true">Needs continuous roadmap ingestion + trust-building — cold-start risk if early priority calls are wrong.</span>
+      </div>
+      <p class="why" contenteditable="true">Why chosen: directly serves our primary user (IC) at their actual decision moment — matches the Step 1 user goal of trusting the backlog reflects real, aligned priority.</p>
+    </div>
+    <div class="direction-card alt">
+      <h4 contenteditable="true">Direction B — Blocker Escalation Assistant</h4>
+      <p contenteditable="true">When an engineer hits a blocker or discovers a task needs more resources/isn't feasible, AI helps them propose and escalate it — routes to the right person, frames the ask.</p>
+      <div class="pro-con">
+        <span class="pro">Pro:</span> <span contenteditable="true">Solves a real, painful moment for the IC — removes friction in escalating blockers.</span>
+        &nbsp;|&nbsp;
+        <span class="con">Con:</span> <span contenteditable="true">Reactive, not proactive — only fires once the engineer is already stuck; doesn't address which ticket to trust before they start.</span>
+      </div>
+      <p class="why" contenteditable="true">Why not chosen: solves a real pain point, but it's reactive — doesn't help the IC decide what to pick up in the first place, which is the core Step 1 problem.</p>
+    </div>
+    <div class="direction-card alt">
+      <h4 contenteditable="true">Direction C — Vision-to-Breakdown Planner</h4>
+      <p contenteditable="true">For early-stage projects with a vision plan, AI breaks the vision into concrete tickets/milestones and proactively notifies stakeholders of blockers or plan changes.</p>
+      <div class="pro-con">
+        <span class="pro">Pro:</span> <span contenteditable="true">Keeps big initiatives on track and visible — strong for long-horizon planning.</span>
+        &nbsp;|&nbsp;
+        <span class="con">Con:</span> <span contenteditable="true">PM/leadership-facing, not IC-facing — doesn't serve our chosen primary user's daily pickup decision.</span>
+      </div>
+      <p class="why" contenteditable="true">Why not chosen: solves a different user's problem (PM/leadership), not our primary user (IC) — right idea, wrong persona for this session's scope.</p>
+    </div>
+  </div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 6: Flow</span></h4>
+    <ul>
+      <li contenteditable="true">Why wouldn't the simpler alternative win on distribution?</li>
+      <li contenteditable="true">What's the growth loop? User signs up → what brings them back?</li>
+      <li contenteditable="true">Where is this 10x better than the status quo?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 6 — FLOW / JOURNEY
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step6);">Step 6 — Flow</span>
+  <h2 class="section-heading" contenteditable="true">Flow / Journey</h2>
+
+  <!-- Flow diagram — add/edit nodes for your flow -->
+  <div class="flow-diagram">
+    <div class="flow-node entry" contenteditable="true">①A AI-initiated: pushes today's top-priority task — the one this engineer "deserves to solve now"</div>
+    <span style="flex-shrink:0; margin:0 4px; font-size:11px; font-weight:700; color:var(--text-muted); text-transform:uppercase;">or</span>
+    <div class="flow-node entry" contenteditable="true">①B Ad hoc / self-initiated: engineer has spare time (e.g. 4pm) — asks the AI directly "what's worth solving now?"</div>
+    <svg class="flow-arrow-icon" width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h20M16 1l5 5-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="flow-node" contenteditable="true">② Engineer reviews the task(s) + AI's reasoning — picks it up or defers</div>
+    <svg class="flow-arrow-icon" width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h20M16 1l5 5-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="flow-node" contenteditable="true">③ On pickup, status updates live — PM/manager/stakeholders see progress</div>
+    <svg class="flow-arrow-icon" width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h20M16 1l5 5-5 5" stroke="#999" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="flow-node entry" contenteditable="true">④ Resolved — or if stuck/delayed, auto-escalates + notifies next owner</div>
+  </div>
+
+  <div class="annotation" contenteditable="true">Edge cases: (1) ambiguous "completion" — partially solved gets flagged for review, not silently closed; (2) if owner needs another person's input, task reassigns and the new owner is notified — mirrors the real-world handoff pattern the team described.</div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 7: Solution</span></h4>
+    <ul>
+      <li contenteditable="true">How many steps before the user gets value? Can you collapse it?</li>
+      <li contenteditable="true">What happens when something goes wrong? How does the user recover?</li>
+      <li contenteditable="true">Which single screen would you ship as MVP?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 7 — SOLUTION / WIREFRAMES
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step7);">Step 7 — Solution</span>
+  <h2 class="section-heading" contenteditable="true">Solution / Wireframes</h2>
+  <h2 class="section-heading" style="margin-top: 4px; font-size: 14px; color: var(--text-secondary);" contenteditable="true">Key screens from the flow</h2>
+
+  <div class="screens-grid">
+    <!-- Screen 1 -->
+    <div class="screen-frame">
+      <div class="screen-header" contenteditable="true">① Screen Name</div>
+      <div class="screen-body">
+        <div class="placeholder-block" contenteditable="true">
+          Wireframe description goes here.
+        </div>
+      </div>
+      <div class="screen-caption" contenteditable="true">User action at this screen.</div>
+    </div>
+
+    <!-- Screen 2 -->
+    <div class="screen-frame">
+      <div class="screen-header" contenteditable="true">② Screen Name</div>
+      <div class="screen-body">
+        <div class="placeholder-block" contenteditable="true">
+          Wireframe description goes here.
+        </div>
+      </div>
+      <div class="screen-caption" contenteditable="true">User action at this screen.</div>
+    </div>
+
+    <!-- Screen 3 -->
+    <div class="screen-frame">
+      <div class="screen-header" contenteditable="true">③ Screen Name</div>
+      <div class="screen-body">
+        <div class="placeholder-block" contenteditable="true">
+          Wireframe description goes here.
+        </div>
+      </div>
+      <div class="screen-caption" contenteditable="true">User action at this screen.</div>
+    </div>
+  </div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ Step 8: Summary</span></h4>
+    <ul>
+      <li contenteditable="true">Are these screens showing different interaction patterns, or do they all look the same?</li>
+      <li contenteditable="true">What's the moment of delight?</li>
+      <li contenteditable="true">How transparent should the system be? Show the reasoning, or just show the answer?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     STEP 8 — SUMMARIZE & NEXT STEPS
+     ============================================================ -->
+<div class="step-card">
+  <span class="step-badge" style="background: var(--step8);">Step 8 — Review</span>
+  <h2 class="section-heading">Summarize & Next Steps</h2>
+
+  <div class="review-content">
+    <p contenteditable="true"><strong>Core bet:</strong> Summary of the bet this solution is making.</p>
+    <p contenteditable="true"><strong>Holds if:</strong> Conditions that validate this solution. <strong>Breaks if:</strong> Conditions that invalidate it.</p>
+  </div>
+
+  <h2 class="section-heading" style="margin-top: 20px;">Success Metrics</h2>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-value" contenteditable="true">—</div>
+      <div class="metric-label" contenteditable="true">Metric 1</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" contenteditable="true">—</div>
+      <div class="metric-label" contenteditable="true">Metric 2</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" contenteditable="true">—</div>
+      <div class="metric-label" contenteditable="true">Metric 3</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-value" contenteditable="true">—</div>
+      <div class="metric-label" contenteditable="true">Metric 4</div>
+    </div>
+  </div>
+
+  <h2 class="section-heading" style="margin-top: 20px;">Next Steps</h2>
+  <div class="next-steps-grid">
+    <div class="next-step-item" contenteditable="true">
+      <strong>Research</strong>
+      What to research next.
+    </div>
+    <div class="next-step-item" contenteditable="true">
+      <strong>User Testing</strong>
+      What to validate with users.
+    </div>
+    <div class="next-step-item" contenteditable="true">
+      <strong>Engineering</strong>
+      What to check technical feasibility on.
+    </div>
+    <div class="next-step-item" contenteditable="true">
+      <strong>Design Exploration</strong>
+      What to explore further in design.
+    </div>
+  </div>
+
+  <div class="step-discussion">
+    <h4>Discuss <span class="next-arrow">→ "What would you explore further?"</span></h4>
+    <ul>
+      <li contenteditable="true">Does this solution actually solve the Step 1 problem, or did you drift into building something different?</li>
+      <li contenteditable="true">What's the biggest risk that could kill this product? What would you test in the first week?</li>
+      <li contenteditable="true">If you had to pick ONE metric to bet the product on, which one and why?</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Figma capture script -->
+<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+# Per-session runtime data — real meeting transcripts, company notes, and
+# generated wireframes are personal/confidential and should never be committed.
+sessions/
+
+# OS cruft
+.DS_Store
+references/
