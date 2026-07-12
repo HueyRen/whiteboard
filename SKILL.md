@@ -59,7 +59,7 @@ Every practice/interview run lives in its own folder under `sessions/` — the r
 
 **Always read these files first, before doing anything:**
 
-1. `sessions/<active-session>/Meeting.md` — live meeting transcript for this session (auto-synced via `/notion on`, or pasted manually)
+1. `sessions/<active-session>/Meeting.md` — live meeting transcript for this session (auto-synced via `transcript on`, or pasted manually)
 2. `sessions/<active-session>/template.html` — current whiteboard state for this session
 
 **On first invocation of the session, also read (if present):**

@@ -17,7 +17,7 @@ The live executor mode reads its context from `Meeting.md`. The easiest way to k
    export NOTION_TOKEN=<your integration secret>
    python3 notion_sync.py <page_id>
    ```
-   This polls the page every 3 seconds and writes the transcript to `Meeting.md` at the repo root. `/wb` reads that file on every invocation, so the whiteboard stays in sync with the live conversation. Ctrl+C to stop.
+   This polls the page every 3 seconds and writes the transcript to `Meeting.md` at the repo root. `/wb` reads that file on every invocation, so the whiteboard stays in sync with the live conversation. This doc refers to this as **`transcript on`** — Ctrl+C (**`transcript off`**) to stop.
 
 On macOS you can skip the `export` and instead store the token once in Keychain — see the top of `notion_sync.py` for the command. `--interval N` changes the poll frequency (default 3s).
 
@@ -37,6 +37,18 @@ This is optional — `/wb lofi` and `/wb prototype` work fine against the local 
 ## Recommended: use Claude Design for wireframing/prototyping
 
 Connect the session repo in Claude Design and do Step 7 there instead of working against loose local files. Real-time prototyping goes noticeably better against a live repo — you can review the commit history as screens evolve, branch to compare lo-fi vs. hi-fi or Direction A vs. B without overwriting each other, and Claude has a clean, versioned source of truth to read from and write back to.
+
+## Example: a real interview session
+
+How the three sections above fit together, end to end:
+
+1. `transcript on` as the call starts.
+2. `/wb s1` … `/wb s6` — work through Steps 1–6 as the conversation happens.
+3. At Step 7, push what the session has produced so far (`sessions/<slug>/template.html`, `Meeting.md`, wireframe assets) to the GitHub repo you created before the call.
+4. Connect that repo in Claude Design — since everything is already pushed, Claude Design has the full session context and can prototype against it directly instead of starting cold.
+5. `transcript off` when the call ends.
+
+None of this applies to solo practice mode (`/wb [prompt]` with no live transcript) — it's only for real, live sessions.
 
 ## What it does
 
