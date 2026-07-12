@@ -1,4 +1,4 @@
-# whiteboard
+# whiteboard design skill
 
 A Claude Code skill for **whiteboard-style product design interviews** — practice mode for drilling the format, and a live executor mode for real interviews.
 
@@ -15,7 +15,7 @@ Turns a live design conversation into a structured 8-step whiteboard (`template.
 Copy this repo into your Claude Code skills directory:
 
 ```bash
-git clone https://github.com/HueyRen/whiteboard.git ~/.claude/skills/wb
+git clone https://github.com/HueyRen/whiteboard-design-skill.git ~/.claude/skills/wb
 ```
 
 Then invoke it in Claude Code as `/wb`.
